@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftCart | Shop Everything</title>
+    <style>
+        /* --- General Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #296C87;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            flex-grow: 0.6;
+            display: flex;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #b2dfdb;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4db6ac;
+            color: white;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 300px;
+            background: #b2ebf2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: #004d40;
+        }
+
+        /* --- Product Grid --- */
+        .container {
+            width: 90%;
+            margin: 40px auto;
+            flex-grow: 1;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* --- Wishlist Button --- */
+        .wishlist-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 5;
+        }
+
+        .wishlist-btn:hover {
+            background: #ffebee;
+            color: #e91e63;
+        }
+
+        /* --- Image Styling --- */
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* Ensures image covers area without stretching */
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #f0f0f0;
+        }
+
+        .price {
+            color: #00796b;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            background: #80deea;
+            color: #004d40;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .buy-btn:hover {
+            background: #4db6ac;
+            color: white;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #e0f2f1;
+            padding: 30px 5%;
+            color: #333;
+            margin-top: 50px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .search-bar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">SwiftCart</a>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button onclick="handleSearch()">Search</button>
+    </div>
+    <nav class="nav-links">
+        <a href="category.html">Category</a>
+        <a href="wishlist.html">Wishlist ❤️</a>
+        <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Upgrade Your Lifestyle</h1>
+        <p style="font-family: rockwell; font-size: 1.5rem; color: #347D5E;">Best deals & best quality</p>
+    </div>
+</section>
+
+<div class="container">
+    <center>
+        <h1 style="font-family: rockwell; color: #55E3ED; text-decoration: underline; font-style: italic; margin-bottom: 30px;">Latest Offers</h1>
+    </center>
+
+    <div class="product-grid">
+        <div class="card" data-name="Wireless Headphones">
+            <button class="wishlist-btn" onclick="addToWishlist('Wireless Headphones', 2499, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500')">❤️</button>
+            <img class="product-image" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Headphones">
+            <h3>Wireless Headphones</h3>
+            <p class="price">₹2,499</p>
+            <button class="buy-btn" onclick="addToCart('Wireless Headphones', 2499, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-name="Smart Watch Series 7">
+            <button class="wishlist-btn" onclick="addToWishlist('Smart Watch Series 7', 14999, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500')">❤️</button>
+            <img class="product-image" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Smart Watch">
+            <h3>Smart Watch Series 7</h3>
+            <p class="price">₹14,999</p>
+            <button class="buy-btn" onclick="addToCart('Smart Watch Series 7', 14999, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-name="Eco-Friendly Bottle">
+            <button class="wishlist-btn" onclick="addToWishlist('Eco-Friendly Bottle', 599, 'https://images.unsplash.com/photo-1602143393494-11116e7a1f47?w=500')">❤️</button>
+            <img class="product-image" src="https://images.unsplash.com/photo-1602143393494-11116e7a1f47?w=500" alt="Bottle">
+            <h3>Eco-Friendly Bottle</h3>
+            <p class="price">₹599</p>
+            <button class="buy-btn" onclick="addToCart('Eco-Friendly Bottle', 599, 'https://images.unsplash.com/photo-1602143393494-11116e7a1f47?w=500')">Add to Cart</button>
+        </div>
+
+        <div class="card" data-name="Minimalist Backpack">
+            <button class="wishlist-btn" onclick="addToWishlist('Minimalist Backpack', 1899, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500')">❤️</button>
+            <img class="product-image" src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500" alt="Backpack">
+            <h3>Minimalist Backpack</h3>
+            <p class="price">₹1,899</p>
+            <button class="buy-btn" onclick="addToCart('Minimalist Backpack', 1899, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500')">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <p>© 2025 SwiftCart India. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('swiftCart')) || [];
+    let wishlist = JSON.parse(localStorage.getItem('swiftWishlist')) || [];
+
+    function updateCartUI() {
+        const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+        document.getElementById('cart-count').innerText = count;
+    }
+
+    function addToCart(name, price, img) {
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ name, price, img, quantity: 1 });
+        }
+        localStorage.setItem('swiftCart', JSON.stringify(cart));
+        updateCartUI();
+        alert(name + " added to cart!");
+    }
+
+    function addToWishlist(name, price, img) {
+        const exists = wishlist.find(item => item.name === name);
+        if (!exists) {
+            wishlist.push({ name, price, img });
+            localStorage.setItem('swiftWishlist', JSON.stringify(wishlist));
+            alert(name + " added to your Wishlist!");
+        } else {
+            alert(name + " is already in your Wishlist!");
+        }
+        window.location.href = "wishlist.html";
+    }
+
+    function handleSearch() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const products = document.querySelectorAll('.card');
+        products.forEach(product => {
+            const name = product.getAttribute('data-name').toLowerCase();
+            product.style.display = name.includes(query) ? "block" : "none";
+        });
+    }
+
+    window.onload = updateCartUI;
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyPortal - Professional Seller Admin</title>
+    <style>
+        :root {
+            --primary-blue: #70b5f9; 
+            --soft-blue: #e8f4ff; 
+            --bg-light: #f9fcff; 
+            --text-dark: #4a5568;
+            --white: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-green: #68d391;
+            --success: #2e7d32;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-light); margin: 0; color: var(--text-dark); }
+        .hidden { display: none !important; }
+
+        .overlay-screen { 
+            height: 100vh; display: flex; justify-content: center; align-items: center; 
+            background-color: var(--soft-blue); position: fixed; width: 100%; top: 0; left: 0; z-index: 1000;
+        }
+        
+        .box-card { 
+            background: var(--white); padding: 40px; border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(112, 181, 249, 0.15); width: 380px; text-align: center;
+        }
+
+        header { background: var(--white); padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        
+        /* Form & Status Cards */
+        .form-card { background: var(--white); padding: 30px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--border-color); }
+        .status-card { 
+            background: linear-gradient(135deg, var(--white) 0%, var(--soft-blue) 100%); 
+            padding: 20px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--primary-blue);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        h3 { color: var(--primary-blue); margin-top: 0; font-size: 1rem; text-transform: uppercase; border-bottom: 1px solid var(--soft-blue); padding-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+        .full-width { grid-column: span 2; }
+
+        label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; color: #718096; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 12px; box-sizing: border-box; background: #fafcfe; }
+
+        .submit-btn { width: 100%; padding: 16px; background: var(--primary-blue); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .submit-btn:hover { background: #5a9ee0; }
+
+        .id-badge { background: var(--primary-blue); color: white; padding: 4px 12px; border-radius: 8px; font-family: monospace; font-size: 1rem; }
+        .seller-badge { background: var(--soft-blue); color: var(--primary-blue); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; border: 1px solid var(--primary-blue); }
+        
+        .preview-img { width: 100%; height: 150px; border: 2px dashed var(--border-color); margin-top: 10px; display: flex; align-items: center; justify-content: center; border-radius: 12px; overflow: hidden; }
+        #render { max-width: 100%; max-height: 100%; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="login-page" class="overlay-screen">
+        <div class="box-card">
+            <h2 style="color: var(--primary-blue);"> your shope s</h2>
+            <p style="color: #718096; font-size: 0.9rem;">Enter your details to access portal</p>
+            <input type="text" id="user-name" placeholder="Full Name" style="margin-bottom:15px">
+            <input type="email" id="user-email" placeholder="Email Address" style="margin-bottom:15px">
+            <button class="submit-btn" onclick="generateAndShowOTP()">Generate OTP</button>
+        </div>
+    </div>
+
+    <div id="otp-page" class="overlay-screen hidden">
+        <div class="box-card">
+            <h2 style="color: var(--primary-blue);">Verification</h2>
+            <p style="color: #718096; font-size: 0.9rem;">Please enter the security code below</p>
+            <div id="generated-otp-display" style="font-size: 2.5rem; font-weight: bold; color: var(--primary-blue); margin: 20px 0;">0000</div>
+            <input type="number" id="otp-input" placeholder="Enter Code">
+            <button class="submit-btn" onclick="verifyOTPAndOpenDashboard()">Verify Access</button>
+        </div>
+    </div>
+
+    <div id="admin-page" class="hidden">
+        <header>
+            <div style="font-weight: 800; color: var(--primary-blue); font-size: 1.2rem;">SKYPORTAL</div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <span id="display-name" style="color: #718096;">Welcome</span>
+                <span id="seller-id-display" class="seller-badge">ID: ---</span>
+                <button onclick="location.reload()" style="background:none; border:1px solid var(--primary-blue); color:var(--primary-blue); cursor:pointer; padding:5px 12px; border-radius:8px; font-size: 0.8rem;">Logout</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="status-card">
+                <div>
+                    <span style="font-size: 0.8rem; color: #718096; font-weight: bold;">CURRENT APPLICATION STATUS</span>
+                    <div style="font-size: 1.2rem; font-weight: bold; margin-top: 5px;" id="order-status-text">Account Ready</div>
+                </div>
+                <div>
+                    <span style="font-size: 0.8rem; color: #718096; font-weight: bold;">ORDER ID</span>
+                    <div style="margin-top: 5px;"><span class="id-badge" id="admin-order-id">PENDING</span></div>
+                </div>
+            </div>
+
+            <form id="sellerForm">
+                <div class="form-card">
+                    <h3>1. Seller Identity & Contact</h3>
+                    <div class="grid">
+                        <div class="full-width"><label>Full Name</label><input type="text" id="form-full-name" required></div>
+                        <div><label>Phone Number</label><input type="tel" required></div>
+                        <div>
+                            <label>Govt ID Type</label>
+                            <select>
+                                <option>Passport</option>
+                                <option>PAN Card</option>
+                                <option>Aadhaar Card</option>
+                            </select>
+                        </div>
+                        <div class="full-width">
+                            <label>Residential Address (Last 180 days)</label>
+                            <input type="text" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3>2. Billing & Tax Details</h3>
+                    <div class="grid">
+                        <div><label>Tax ID (GST/PAN)</label><input type="text" required></div>
+                        <div><label>IFSC / Routing Code</label><input type="text" required></div>
+                        <div class="full-width"><label>Bank Account Number</label><input type="password" required></div>
+                        <div>
+                            <label>Selling Plan</label>
+                            <select><option>Individual (Pay per sale)</option><option>Professional (Monthly Fee)</option></select>
+                        </div>
+                        <div>
+                            <label>Shipping Method</label>
+                            <select><option>FBA (Ships by Portal)</option><option>Easy Ship</option><option>Self Ship</option></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h3>3. Product Listing</h3>
+                    <div class="grid">
+                        <div><label>Product Name</label><input type="text" id="prodName" required></div>
+                        <div><label>Existing Order No. (If any)</label><input type="text" id="orderNo"></div>
+                        <div class="full-width">
+                            <label>Product Verification Image (Upload File)</label>
+                            <input type="file" id="photoUrl" accept="image/*" onchange="previewImg(this)">
+                            <div class="preview-img">
+                                <span id="preview-text" style="color: #cbd5e0;">Image Preview</span>
+                                <img id="render" src="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" style="background: var(--accent-green); margin-bottom: 50px;">SUBMIT DATA TO GENERATE ORDER ID</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentOTP = "";
+        let sellerID = "";
+        let userName = "";
+
+        function generateAndShowOTP() {
+            userName = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            if(userName && email) {
+                currentOTP = Math.floor(1000 + Math.random() * 9000).toString();
+                document.getElementById('generated-otp-display').innerText = currentOTP;
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('otp-page').classList.remove('hidden');
+            } else { alert("Please enter both Name and Email"); }
+        }
+
+        function verifyOTPAndOpenDashboard() {
+            if(document.getElementById('otp-input').value === currentOTP) {
+                sellerID = "SID-" + Math.floor(10000 + Math.random() * 90000);
+                document.getElementById('display-name').innerText = "Seller: " + userName;
+                document.getElementById('form-full-name').value = userName;
+                document.getElementById('seller-id-display').innerText = "ID: " + sellerID;
+                document.getElementById('otp-page').classList.add('hidden');
+                document.getElementById('admin-page').classList.remove('hidden');
+            } else { alert("Wrong OTP Code"); }
+        }
+
+        function previewImg(input) {
+            const file = input.files[0];
+            const img = document.getElementById('render');
+            const text = document.getElementById('preview-text');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    img.style.display = "block";
+                    text.style.display = "none";
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.getElementById('sellerForm').onsubmit = function(e) {
+            e.preventDefault();
+            const newOrderID = "ORD-" + sellerID.split('-')[1] + "-" + Math.floor(100 + Math.random() * 900);
+            
+            document.getElementById('admin-order-id').innerText = newOrderID;
+            document.getElementById('order-status-text').innerText = "Registration Under Review";
+            document.getElementById('order-status-text').style.color = "#3182ce";
+            
+            alert("Success! Data submitted. Your Order ID " + newOrderID + " is now active.");
+            this.reset();
+            document.getElementById('render').style.display = "none";
+            document.getElementById('preview-text').style.display = "block";
+        };
+    </script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqJmCiyUeSap33gX5Yc08RRcbHkc4TJ2M",
+    authDomain: "your-shop-d2621.firebaseapp.com",
+    projectId: "your-shop-d2621",
+    storageBucket: "your-shop-d2621.firebasestorage.app",
+    messagingSenderId: "673523053058",
+    appId: "1:673523053058:web:07e21066e090feefbded1b",
+    measurementId: "G-RMXX3LH1HB"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>       
+</body>
+</html>
+</body>
+</html>
