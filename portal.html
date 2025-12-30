@@ -1,0 +1,68 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Portal | Add Product</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .portal-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 400px; }
+        h2 { color: #0277bd; text-align: center; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .add-btn { width: 100%; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .back-link { display: block; text-align: center; margin-top: 15px; text-decoration: none; color: #666; }
+    </style>
+</head>
+<body>
+
+<div class="portal-box">
+    <h2>Add New Product</h2>
+    <input type="text" id="p-name" placeholder="Product Name" required>
+    <input type="number" id="p-price" placeholder="Price (INR)" required>
+    <input type="text" id="p-image" placeholder="Image URL (Link)" required>
+    <select id="p-category">
+        <option value="Clothes">Clothes</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Grocery">Grocery</option>
+    </select>
+    <button class="add-btn" onclick="saveProduct()">List Product Now</button>
+    <a href="index.html" class="back-link">← Back to Home</a>
+</div>
+
+<script>
+    function saveProduct() {
+        const name = document.getElementById('p-name').value;
+        const price = document.getElementById('p-price').value;
+        const image = document.getElementById('p-image').value;
+        const category = document.getElementById('p-category').value;
+
+        if(!name || !price || !image) {
+            alert("Please fill all details!");
+            return;
+        }
+
+        // ૧. જૂનો ડેટા મેળવો
+        let products = JSON.parse(localStorage.getItem('yourShopProducts')) || [];
+
+        // ૨. નવી પ્રોડક્ટ ઓબ્જેક્ટ બનાવો
+        const newProduct = {
+            id: Date.now(),
+            name: name,
+            price: price,
+            image: image,
+            category: category
+        };
+
+        // ૩. લિસ્ટમાં ઉમેરો અને સેવ કરો
+        products.push(newProduct);
+        localStorage.setItem('yourShopProducts', JSON.stringify(products));
+
+        alert("Success! Product is now live on Home Page.");
+        
+        // ફોર્મ ક્લિયર કરો
+        document.getElementById('p-name').value = '';
+        document.getElementById('p-price').value = '';
+        document.getElementById('p-image').value = '';
+    }
+</script>
+</body>
+</html>

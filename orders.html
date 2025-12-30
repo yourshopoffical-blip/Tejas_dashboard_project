@@ -1,0 +1,149 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | Your Shop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f4f9f9; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* HEADER */
+        header { background: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #00796b; text-decoration: none; }
+        .nav-links a { margin-left: 20px; text-decoration: none; color: #555; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: #00796b; }
+
+        /* CONTAINER */
+        .container { max-width: 900px; margin: 40px auto; width: 90%; flex: 1; }
+        h1 { color: #004d40; margin-bottom: 20px; border-bottom: 2px solid #e0f2f1; padding-bottom: 10px; }
+
+        /* ORDER CARD */
+        .order-card { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .order-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; font-size: 0.9rem; color: #555; }
+        .order-id { font-weight: bold; color: #00796b; }
+        
+        .order-item { display: flex; align-items: center; margin-bottom: 10px; }
+        .item-img { width: 60px; height: 60px; object-fit: contain; border: 1px solid #eee; border-radius: 5px; margin-right: 15px; background: white; }
+        
+        .status { padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; }
+        .status-Processing { background: #fff3e0; color: #e65100; }
+        .status-Shipped { background: #e3f2fd; color: #1565c0; }
+        .status-Delivered { background: #e8f5e9; color: #2e7d32; }
+
+        .empty-state { text-align: center; padding: 50px; color: #777; }
+        .empty-state a { display: inline-block; margin-top: 15px; padding: 10px 20px; background: #00796b; color: white; text-decoration: none; border-radius: 20px; }
+
+        /* ACTION BUTTONS */
+        .action-row {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-top: 1px solid #eee; 
+            padding-top: 10px; 
+            margin-top: 10px;
+        }
+
+        .btn-group { display: flex; gap: 10px; }
+
+        .action-btn {
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .track-btn { background: #00796b; color: white; }
+        .track-btn:hover { background: #004d40; }
+
+        .return-btn { background: white; color: #d32f2f; border: 1px solid #d32f2f; }
+        .return-btn:hover { background: #ffebee; }
+
+        @media (max-width: 768px) { 
+            header { flex-direction: column; gap: 15px; } 
+            .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; } 
+            .action-row { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .btn-group { width: 100%; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="category.html">Category</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="orders.html" style="color: #00796b; font-weight: bold;">Orders</a>
+        <a href="cart.html">Cart</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>My Order History</h1>
+    <div id="orders-list"></div>
+</div>
+
+<script>
+    // Load Orders from LocalStorage
+    const orders = JSON.parse(localStorage.getItem('yourShopOrders')) || [];
+    const list = document.getElementById('orders-list');
+
+    if (orders.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <h2 style="font-size: 3rem;">📦</h2>
+                <h3>No orders yet</h3>
+                <p>Looks like you haven't bought anything.</p>
+                <a href="index.html">Start Shopping</a>
+            </div>`;
+    } else {
+        // Show Orders (Newest First)
+        list.innerHTML = orders.slice().reverse().map(order => `
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <span class="order-id">#${order.id}</span> • ${order.date}
+                    </div>
+                    <div>
+                        <span class="status status-${order.status || 'Processing'}">${order.status || 'Processing'}</span>
+                    </div>
+                </div>
+                
+                ${order.items.map(item => `
+                    <div class="order-item">
+                        <img src="${item.image}" class="item-img" alt="${item.name}" onerror="this.src='https://via.placeholder.com/60?text=No+Img'">
+                        <div>
+                            <strong>${item.name}</strong> <br>
+                            <small>Qty: ${item.qty} | Price: ₹${item.price}</small>
+                        </div>
+                    </div>
+                `).join('')}
+
+                <div class="action-row">
+                    <div class="btn-group">
+                        <a href="track.html?id=${order.id}" class="action-btn track-btn">
+                            📍 Track
+                        </a>
+                        
+                        <a href="return.html?id=${order.id}" class="action-btn return-btn">
+                            ↩ Return
+                        </a>
+                    </div>
+
+                    <strong style="font-size: 1.1rem; color: #004d40;">Total: ₹${order.total.toLocaleString('en-IN')}</strong>
+                </div>
+            </div>
+        `).join('');
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Request | SwiftCart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary-color: #4f46e5; --text-main: #1f2937; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f9fafb; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .container { background: white; width: 100%; max-width: 500px; padding: 30px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        h1 { text-align: center; color: var(--text-main); margin-bottom: 5px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px; box-sizing: border-box; }
+        .file-upload { border: 2px dashed #ccc; padding: 15px; text-align: center; border-radius: 8px; cursor: pointer; }
+        .btn-submit { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .hidden { display: none; }
+        .success-msg { display: none; text-align: center; padding: 20px; }
+        .success-msg i { font-size: 50px; color: #22c55e; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="returnForm">
+        <h1>Start a Return</h1>
+        <p style="text-align:center; color:#666;">Tell us why you want to return this item.</p>
+
+        <form onsubmit="submitReturn(event)">
+            <div class="form-group">
+                <label>Order Number</label>
+                <input type="text" id="orderId" placeholder="#ABC-12345" required readonly style="background:#f3f4f6;">
+            </div>
+
+            <div class="form-group">
+                <label>Reason for Return</label>
+                <select id="reason" required>
+                    <option value="">Select a reason...</option>
+                    <option value="damaged">Damaged on arrival</option>
+                    <option value="wrong-item">Received wrong item</option>
+                    <option value="size">Size doesn't fit</option>
+                    <option value="not-satisfied">Not as described</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Additional Details</label>
+                <textarea id="details" rows="3" placeholder="More information..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Photo (Optional)</label>
+                <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p style="margin: 5px 0 0 0; font-size: 13px;">Click to upload image</p>
+                    <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="previewFile()">
+                </div>
+                <p id="fileName" style="font-size: 12px; color: green; text-align: center; display: none;"></p>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Return Request</button>
+        </form>
+    </div>
+
+    <div id="successContent" class="success-msg">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Request Received!</h2>
+        <p>Your return request has been submitted successfully.</p>
+        <button class="btn-submit" style="background: #f3f4f6; color: #333;" onclick="window.location.href='orders.html'">Back to Orders</button>
+    </div>
+</div>
+
+<script>
+    // 1. Auto-fill Order ID from URL
+    window.onload = function() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if(id) document.getElementById('orderId').value = id;
+    }
+
+    // 2. File Preview
+    function previewFile() {
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileName');
+        if(fileInput.files.length > 0) {
+            fileNameDisplay.innerText = "Selected: " + fileInput.files[0].name;
+            fileNameDisplay.style.display = 'block';
+        }
+    }
+
+    // 3. Submit Logic (Fix for "Something went wrong")
+    function submitReturn(event) {
+        event.preventDefault(); // Stop reload
+
+        const btn = document.querySelector('.btn-submit');
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        // Simulate sending data (since we don't have a real server)
+        setTimeout(() => {
+            // Save request to LocalStorage (Optional: to show status later)
+            const request = {
+                id: document.getElementById('orderId').value,
+                reason: document.getElementById('reason').value,
+                status: 'Return Pending'
+            };
+            
+            // Get existing returns or empty array
+            const returns = JSON.parse(localStorage.getItem('yourShopReturns')) || [];
+            returns.push(request);
+            localStorage.setItem('yourShopReturns', JSON.stringify(returns));
+
+            // Show Success UI
+            document.getElementById('returnForm').classList.add('hidden');
+            document.getElementById('successContent').style.display = 'block';
+        }, 1500);
+    }
+</script>
+
+</body>
+</html> 
