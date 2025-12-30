@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Your Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #00796b; }
+
+        /* --- HERO SECTION --- */
+        .contact-hero {
+            background: #00796b;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+
+        .contact-hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .contact-hero p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* --- CONTENT CONTAINER --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 90%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Info Card (Left) */
+        .info-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .icon-box {
+            background: #e0f2f1;
+            color: #00796b;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 { margin-bottom: 5px; color: #004d40; }
+        .info-content p { color: #666; font-size: 0.95rem; }
+
+        /* Contact Form (Right) */
+        .form-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .form-card h2 {
+            color: #004d40;
+            margin-bottom: 25px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+            background: #f9f9f9;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #00796b;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 121, 107, 0.1);
+        }
+
+        textarea { resize: vertical; min-height: 120px; }
+
+        .submit-btn {
+            width: 100%;
+            background: #00796b;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover { background: #004d40; }
+
+        /* Success Message */
+        .success-msg {
+            display: none;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2f1;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            header { flex-direction: column; gap: 15px; }
+            .nav-links { width: 100%; display: flex; justify-content: space-around; }
+            .nav-links a { margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="orders.html">Orders</a>
+        <a href="aboutus.html">About Us</a>
+    </nav>
+</header>
+
+<div class="contact-hero">
+    <h1>Get in Touch</h1>
+    <p>Have a question or need help? We're here for you.</p>
+</div>
+
+<div class="container">
+    
+    <div class="info-card">
+        <div class="info-item">
+            <div class="icon-box">📍</div>
+            <div class="info-content">
+                <h3>Our Office</h3>
+                <p>101, Riverfront House,<br>Ahmedabad, Gujarat 380001</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="icon-box">📞</div>
+            <div class="info-content">
+                <h3>Phone Number</h3>
+                <p>+91 98765 43210</p>
+                <p style="font-size: 0.8rem; color: #999;">Mon-Sat, 9am - 6pm</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="icon-box">✉️</div>
+            <div class="info-content">
+                <h3>Email Us</h3>
+                <p>support@yourshop.in</p>
+                <p>sales@yourshop.in</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card">
+        <h2>Send us a Message</h2>
+        <form onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label>Subject</label>
+                <select>
+                    <option>Order Status</option>
+                    <option>Return & Refund</option>
+                    <option>Product Inquiry</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Message</label>
+                <textarea placeholder="How can we help you today?" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+
+            <div class="success-msg" id="msg-box">
+                ✅ Message sent successfully! We'll get back to you soon.
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2025 Your Shop India. All Rights Reserved.</p>
+</footer>
+
+<script>
+    function handleSubmit(e) {
+        e.preventDefault(); // Stop reload
+
+        const btn = document.querySelector('.submit-btn');
+        const msgBox = document.getElementById('msg-box');
+
+        // Animation Effect
+        btn.innerText = "Sending...";
+        btn.style.opacity = "0.7";
+
+        setTimeout(() => {
+            // Reset Button
+            btn.innerText = "Send Message";
+            btn.style.opacity = "1";
+            
+            // Show Success
+            msgBox.style.display = "block";
+            
+            // Clear Form
+            e.target.reset();
+
+            // Hide Success Message after 4 seconds
+            setTimeout(() => {
+                msgBox.style.display = "none";
+            }, 4000);
+
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

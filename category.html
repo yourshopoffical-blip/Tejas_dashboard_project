@@ -1,0 +1,374 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | Your Shop Winter Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* --- WINTER SKY BLUE THEME --- */
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F7FA 100%);
+            color: #333;
+            padding-bottom: 50px;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- SNOWFLAKE CSS --- */
+        .snowflake {
+            position: fixed;
+            top: -20px;
+            color: white;
+            font-size: 1.5em;
+            user-select: none;
+            z-index: 9999;
+            pointer-events: none;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0277bd;
+            text-decoration: none;
+        }
+
+        /* SEARCH BAR */
+        .search-container {
+            flex-grow: 0.6;
+            display: flex;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #b3e5fc;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: #0288d1;
+            box-shadow: 0 0 8px rgba(2, 136, 209, 0.2);
+        }
+
+        .search-container button {
+            padding: 10px 25px;
+            border: none;
+            background-color: #29b6f6;
+            color: white;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .search-container button:hover { background-color: #0277bd; }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #0288d1; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 250px;
+            background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(135, 206, 235, 0.3);
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            color: #01579b;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #0277bd;
+            font-family: 'Rockwell', serif;
+        }
+
+        /* --- CATEGORY GRID --- */
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #01579b;
+            font-family: 'Rockwell', serif;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            text-decoration: underline;
+            text-decoration-color: white;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .cat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        .cat-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(2, 119, 189, 0.2); 
+            border-color: #0288d1;
+        }
+
+        .cat-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            display: block;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .cat-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #01579b;
+        }
+
+        .cat-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .view-btn {
+            display: inline-block;
+            background: #e1f5fe;
+            color: #0277bd;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .cat-card:hover .view-btn {
+            background: #0277bd;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #e1f5fe;
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+            color: #0277bd;
+            position: relative; 
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            .search-container { width: 100%; }
+            .nav-links { width: 100%; display: flex; justify-content: space-around; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Find a category...">
+        <button id="search-btn">🔍</button>
+    </div>
+
+    <nav class="nav-links">
+        <a href="catagory.html" style="color:#0288d1;">Category</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="orders.html">Orders</a>
+        <a href="cart.html" id="cart-link">Cart (0)</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Browse Categories</h1>
+        <p class="hero-subtitle">Select a category to view products</p>
+    </div>
+</section>
+
+<div class="container">
+    <h1 class="section-title">Shop By Department</h1>
+    
+    <div class="category-grid" id="category-grid">
+        </div>
+</div>
+
+<footer>
+    <p>© 2025 Your Shop India. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // --- 1. SNOWFLAKE ANIMATION LOGIC ---
+    function createSnowflakes() {
+        const snowflakeCount = 50; 
+        for (let i = 0; i < snowflakeCount; i++) {
+            const snow = document.createElement('div');
+            snow.className = 'snowflake';
+            snow.innerHTML = '❄';
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.animationDuration = Math.random() * 5 + 3 + 's';
+            snow.style.opacity = Math.random() * 0.7 + 0.3;
+            snow.style.fontSize = Math.random() * 20 + 10 + 'px';
+            snow.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(snow);
+        }
+    }
+
+    // --- 2. CATEGORY DATA (NO PRODUCTS) ---
+    const categories = [
+        { 
+            name: "Grocery", 
+            icon: "🥦", 
+            desc: "Fresh vegetables, daily staples, spices, and organic products delivered to your door." 
+        },
+        { 
+            name: "Electronics", 
+            icon: "🎧", 
+            desc: "Latest gadgets, smartphones, smartwatches, and high-performance laptops." 
+        },
+        { 
+            name: "Clothes & Fashion", 
+            icon: "👕", 
+            desc: "Trendy winter wear, traditional outfits, denim, and stylish footwear." 
+        },
+        { 
+            name: "Home Decor", 
+            icon: "🏠", 
+            desc: "Beautiful wall paintings, clocks, vases, and furniture to style your home." 
+        },
+        { 
+            name: "Wedding Collection", 
+            icon: "💍", 
+            desc: "Exclusive bridal sets, sherwanis, jewelry, and party wear for the big day." 
+        }
+    ];
+
+    // --- 3. RENDER LOGIC ---
+    const gridContainer = document.getElementById('category-grid');
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const cartLink = document.getElementById('cart-link');
+
+    function renderCategories(items) {
+        gridContainer.innerHTML = ''; 
+        
+        if (items.length === 0) {
+            gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #01579b; padding: 40px;"><h2>No categories found.</h2></div>`;
+            return;
+        }
+
+        items.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'cat-card';
+            
+            // On click, this would ideally go to index.html with a filter, 
+            // but for now, it just alerts or reloads.
+            card.onclick = function() {
+                // In a real app: window.location.href = `index.html?category=${cat.name}`;
+                alert(`Opening ${cat.name} products...`);
+            };
+
+            card.innerHTML = `
+                <span class="cat-icon">${cat.icon}</span>
+                <h3>${cat.name}</h3>
+                <p>${cat.desc}</p>
+                <span class="view-btn">View Products →</span>
+            `;
+            gridContainer.appendChild(card);
+        });
+    }
+
+    // --- 4. CART COUNT LOGIC ---
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('yourShopCart')) || [];
+        let count = cart.reduce((total, item) => total + item.qty, 0);
+        cartLink.innerText = `Cart (${count})`;
+    }
+
+    // --- 5. SEARCH LOGIC ---
+    function performSearch() {
+        const query = searchInput.value.toLowerCase().trim();
+        const filtered = categories.filter(cat => 
+            cat.name.toLowerCase().includes(query) || 
+            cat.desc.toLowerCase().includes(query)
+        );
+        renderCategories(filtered);
+    }
+
+    searchInput.addEventListener('input', performSearch);
+    searchBtn.addEventListener('click', performSearch);
+
+    window.onload = function() {
+        renderCategories(categories);
+        updateCartCount();
+        createSnowflakes(); // Start Snow Animation
+    };
+</script>
+
+</body>
+</html>

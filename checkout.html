@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Your Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f9;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 0 20px 50px 20px;
+        }
+
+        /* Left Column: Forms */
+        .form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #004d40;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0f2f1;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00796b;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .half {
+            width: 50%;
+        }
+
+        /* Payment Options */
+        .payment-option {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: 0.2s;
+        }
+
+        .payment-option:hover, .payment-option.selected {
+            border-color: #00796b;
+            background-color: #e0f2f1;
+        }
+
+        .payment-option input {
+            width: auto;
+            margin-right: 15px;
+        }
+
+        /* Right Column: Order Summary */
+        .order-summary {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* Coupon Styling */
+        .coupon-section {
+            margin: 15px 0;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .coupon-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .coupon-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .coupon-btn:hover { background: #000; }
+
+        #coupon-msg {
+            font-size: 0.85rem; 
+            margin-top: 5px;
+            min-height: 20px; 
+        }
+
+        /* Total Row */
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 2px solid #e0f2f1;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #004d40;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4db6ac;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .place-order-btn:hover {
+            background: #00796b;
+        }
+
+        /* Success Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .check-icon {
+            font-size: 4rem;
+            color: #4db6ac;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Your Shop</a>
+        <div style="font-weight: bold; color: #555;">Secure Checkout 🔒</div>
+    </header>
+
+    <form class="container" id="checkout-form" onsubmit="handleOrder(event)">
+        
+        <div>
+            <div class="form-section">
+                <h2>1. Shipping Address</h2>
+                <div class="row">
+                    <div class="form-group half">
+                        <label>First Name</label>
+                        <input type="text" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group half">
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Last Name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" placeholder="Flat No, Street, Landmark" required>
+                </div>
+                <div class="row">
+                    <div class="form-group half">
+                        <label>City</label>
+                        <input type="text" placeholder="City" required>
+                    </div>
+                    <div class="form-group half">
+                        <label>Pincode</label>
+                        <input type="text" placeholder="Pincode" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+91 98765 43210" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>2. Payment Method</h2>
+                
+                <div class="payment-option selected" onclick="selectPayment(this, 'card')">
+                    <input type="radio" name="payment" checked>
+                    <strong>Credit / Debit Card</strong>
+                </div>
+                <div id="card-details" class="form-group" style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="0000 0000 0000 0000">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="half"><input type="text" placeholder="MM/YY"></div>
+                        <div class="half"><input type="text" placeholder="CVV"></div>
+                    </div>
+                </div>
+
+                <div class="payment-option" onclick="selectPayment(this, 'upi')">
+                    <input type="radio" name="payment">
+                    <strong>UPI / GPay / PhonePe</strong>
+                </div>
+
+                <div class="payment-option" onclick="selectPayment(this, 'cod')">
+                    <input type="radio" name="payment">
+                    <strong>Cash on Delivery (COD)</strong>
+                </div>
+            </div>
+        </div>
+
+        <aside class="order-summary">
+            <h2>Order Summary</h2>
+            
+            <div class="summary-row">
+                <span id="items-count">Items Total (0)</span>
+                <span id="items-total">₹0</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Charge</span>
+                <span style="color: #2e7d32;">FREE</span>
+            </div>
+            <div class="summary-row">
+                <span>Taxes (Included)</span>
+                <span>₹0</span>
+            </div>
+
+            <div class="coupon-section">
+                <div class="coupon-input-group">
+                    <input type="text" id="coupon-input" placeholder="Coupon Code (Try YOURSHOP50)">
+                    <button type="button" class="coupon-btn" onclick="applyCoupon()">Apply</button>
+                </div>
+                <p id="coupon-msg"></p>
+                
+                <div class="summary-row" id="discount-row" style="display: none; margin-top: 10px; color: green;">
+                    <span>Discount Applied</span>
+                    <span>- ₹500.00</span>
+                </div>
+            </div>
+            <div class="total-row">
+                <span>Order Total</span>
+                <span id="final-total">₹0</span>
+            </div>
+
+            <button type="submit" class="place-order-btn">Place Order</button>
+            
+            <div style="text-align: center; margin-top: 15px; font-size: 0.85rem; color: #777;">
+                By placing your order, you agree to our Terms of Service.
+            </div>
+        </aside>
+
+    </form>
+
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="check-icon">✅</div>
+            <h2>Order Placed!</h2>
+            <p style="margin: 15px 0; color: #555;">Thank you for shopping with Your Shop. We are redirecting you to your orders.</p>
+            <button class="place-order-btn" onclick="window.location.href='orders.html'">View My Orders</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. GLOBAL VARIABLES ---
+        let currentTotal = 0;
+        let discountApplied = false;
+        // CHANGED KEY
+        let cart = JSON.parse(localStorage.getItem('yourShopCart')) || [];
+
+        // --- 2. INITIALIZE PAGE (Calculate Real Total) ---
+        window.onload = function() {
+            if(cart.length === 0) {
+                alert("Your cart is empty. Redirecting to store.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            // Calculate Total from Cart
+            let total = 0;
+            let count = 0;
+            
+            cart.forEach(item => {
+                total += (item.price * item.qty);
+                count += item.qty;
+            });
+
+            currentTotal = total;
+
+            // Update UI
+            document.getElementById('items-count').innerText = `Items Total (${count})`;
+            document.getElementById('items-total').innerText = "₹" + total.toLocaleString('en-IN');
+            document.getElementById('final-total').innerText = "₹" + total.toLocaleString('en-IN');
+        }
+
+        // --- 3. PAYMENT SELECTION UI ---
+        function selectPayment(element, type) {
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('input[name="payment"]').forEach(radio => radio.checked = false);
+            
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+
+            const cardDetails = document.getElementById('card-details');
+            if (type === 'card') {
+                cardDetails.style.display = 'block';
+            } else {
+                cardDetails.style.display = 'none';
+            }
+        }
+
+        // --- 4. COUPON LOGIC (UPDATED) ---
+        function applyCoupon() {
+            const input = document.getElementById('coupon-input');
+            const msg = document.getElementById('coupon-msg');
+            const discountRow = document.getElementById('discount-row');
+            const totalDisplay = document.getElementById('final-total');
+            const code = input.value.trim().toUpperCase();
+
+            if (code === "") {
+                msg.innerText = "Please enter a code.";
+                msg.style.color = "red";
+                return;
+            }
+
+            if (discountApplied) {
+                msg.innerText = "Coupon already applied!";
+                msg.style.color = "orange";
+                return;
+            }
+
+            // CHANGED CODE: SWIFT50 -> YOURSHOP50
+            if (code === "YOURSHOP50") {
+                discountApplied = true;
+                currentTotal = Math.max(0, currentTotal - 500); // Prevent negative
+                
+                msg.innerText = "Success! ₹500 Discount Applied.";
+                msg.style.color = "green";
+                
+                discountRow.style.display = "flex"; 
+                totalDisplay.innerText = "₹" + currentTotal.toLocaleString('en-IN');
+                
+                input.disabled = true; 
+            } else {
+                msg.innerText = "Invalid Coupon Code.";
+                msg.style.color = "red";
+            }
+        }
+ // --- 5. HANDLE ORDER SUBMISSION (FIXED) ---
+function handleOrder(e) {
+    e.preventDefault(); 
+
+    // 1. Order Object banao
+    const newOrder = {
+        id: 'ORD-' + Math.floor(Math.random() * 1000000),
+        date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+        total: currentTotal, 
+        items: cart, // Cart items save karo
+        status: 'Processing' // Default status add karyu admin mate
+    };
+
+    // 2. Order History ma save karo
+    const orderHistory = JSON.parse(localStorage.getItem('yourShopOrders')) || [];
+    orderHistory.push(newOrder);
+    localStorage.setItem('yourShopOrders', JSON.stringify(orderHistory));
+
+    // 3. UI Success Effect (Button Text Change)
+    const btn = document.querySelector('.place-order-btn');
+    btn.innerText = "Processing Payment...";
+    btn.style.opacity = "0.7";
+
+    // 4. Modal Show karo and pachi Cart clear karo
+    setTimeout(() => {
+        // Modal batavo
+        document.getElementById('successModal').style.display = 'flex';
+        
+        // Have Cart Clear karo (Order save thaya pachi)
+        localStorage.removeItem('yourShopCart');
+
+        // 3 seconds pachi redirect
+        setTimeout(() => {
+             window.location.href = 'orders.html'; // Tamare orders.html banavvi padse
+        }, 3000);
+    }, 2000);
+}
+    </script>
+
+</body>
+</html>
