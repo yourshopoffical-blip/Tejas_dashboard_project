@@ -1,0 +1,416 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta name="google-site-verification" content="zrtUCndNEyyxF7oIl0PZjUV_glh9lUcCOrDSHrQeoO4" />
+    <title>Your Shop | Winter Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F7FA 100%);
+            color: #333;
+            padding-bottom: 50px;
+            scroll-behavior: smooth;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- SNOWFLAKE CSS --- */
+        .snowflake {
+            position: fixed;
+            top: -20px;
+            color: white;
+            font-size: 1.5em;
+            user-select: none;
+            z-index: 9999;
+            pointer-events: none;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo { display: flex; align-items: center; text-decoration: none; }
+        .logo img { height: 55px; width: auto; object-fit: contain; }
+
+        .search-container {
+            flex-grow: 0.6;
+            display: flex;
+            position: relative;
+            align-items: center;
+            margin: 0 20px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #b3e5fc;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+            font-size: 1rem;
+            transition: 0.3s;
+            border-right: none;
+        }
+
+        .search-container input:focus { border-color: #0288d1; box-shadow: 0 0 8px rgba(2, 136, 209, 0.2); }
+
+        .icon-btn {
+            padding: 0 10px;
+            border: 2px solid #b3e5fc;
+            border-left: none;
+            border-right: none;
+            background-color: white;
+            color: #0277bd;
+            cursor: pointer;
+            font-size: 1.2rem;
+            height: 47px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .icon-btn:hover { background-color: #e1f5fe; }
+        #mic-btn.listening { color: red; animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        #search-btn {
+            padding: 10px 25px;
+            border: none;
+            background-color: #29b6f6;
+            color: white;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: bold;
+            height: 47px;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #0288d1; }
+
+        /* --- LIVE BANNER --- */
+        .live-banner {
+            background: #4FC3F7;
+            color: #01579b;
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 999;
+        }
+
+        .banner-track {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+            padding-left: 100%;
+        }
+
+        .banner-item {
+            display: inline-block;
+            margin: 0 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .live-dot {
+            height: 10px; width: 10px; background-color: white;
+            border-radius: 50%; display: inline-block; margin-right: 10px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 300px;
+            background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 30px;
+        }
+
+        .hero-content h1 { font-size: 3.5rem; color: #01579b; margin-bottom: 10px; }
+
+        /* --- PRODUCT GRID --- */
+        .container { width: 90%; margin: auto; max-width: 1200px; }
+        .section-title { text-align: center; color: #01579b; font-size: 2.5rem; margin-bottom: 10px; }
+
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .filter-btn {
+            padding: 8px 20px; border: 2px solid white; background: rgba(255,255,255,0.6);
+            border-radius: 25px; cursor: pointer; font-weight: 600; color: #0277bd; transition: 0.3s;
+        }
+        .filter-btn.active { background: #0288d1; color: white; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+        .card {
+            background: rgba(255, 255, 255, 0.95); padding: 15px; border-radius: 15px;
+            text-align: center; transition: transform 0.3s; position: relative; border: 1px solid #e1f5fe;
+        }
+        .card:hover { transform: translateY(-7px); }
+
+        .price { color: #0277bd; font-weight: bold; font-size: 1.3rem; margin: 10px 0; }
+        .buy-btn {
+            background: #4fc3f7; color: #01579b; padding: 10px 25px; border-radius: 25px;
+            cursor: pointer; border: none; font-weight: bold; width: 100%; transition: 0.3s;
+        }
+        .buy-btn:hover { background: #039be5; color: white; }
+
+        /* --- FOOTER & SOCIAL --- */
+        footer { text-align: center; padding: 40px 20px; background: #e1f5fe; margin-top: 0; }
+        .footer-link { color: #0277bd; text-decoration: none; font-weight: bold; margin: 0 15px; }
+        
+        .social-links { margin: 20px 0; }
+        .social-links a {
+            text-decoration: none;
+            font-size: 1.8rem;
+            margin: 0 15px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .social-links a:hover { transform: scale(1.2); }
+        .fa-facebook { color: #1877F2; }
+        .fa-instagram { color: #E4405F; }
+
+        .newsletter { background: #0277bd; color: white; padding: 50px 20px; text-align: center; }
+        .newsletter input { padding: 12px; border-radius: 30px; border: none; width: 300px; margin-bottom: 10px; }
+        .newsletter button { padding: 12px 30px; background: #81d4fa; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; }
+
+        #scrollTopBtn {
+            display: none; position: fixed; bottom: 20px; right: 20px;
+            background-color: #0288d1; color: white; border: none;
+            padding: 15px; border-radius: 50%; cursor: pointer; z-index: 100;
+        }
+
+        .whatsapp-float {
+            position: fixed; bottom: 80px; right: 20px; background-color: #25d366;
+            color: white; width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 30px; text-decoration: none; z-index: 100;
+        }
+
+        #toast {
+            visibility: hidden; min-width: 250px; background-color: #333; color: #fff;
+            text-align: center; border-radius: 25px; padding: 16px; position: fixed;
+            z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s; }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            .search-container { width: 100%; margin: 0; }
+            .nav-links { width: 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">
+        <img src="logo.jpg" alt="Your Shop Logo">
+    </a>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search products...">
+        <button id="cam-btn" class="icon-btn" onclick="openCameraModal()" title="Image Search">📷</button>
+        <button id="mic-btn" class="icon-btn" onclick="startVoiceSearch()" title="Speak to Search">🎤</button>
+        <button id="search-btn">🔍</button>
+    </div>
+
+    <nav class="nav-links">
+        <a href="index.html" style="color: #0288d1; font-weight: bold;">Home</a>
+        <a href="category.html">Category</a>
+        <a href="wishlist.html">Wishlist</a>
+        <a href="cart.html" id="cart-link">Cart (0)</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="live-banner">
+    <div class="banner-track">
+        <span class="banner-item"><span class="live-dot"></span>❄ WINTER SALE: Flat 50% OFF!</span>
+        <span class="banner-item">🚚 FREE Delivery on First Order</span>
+        <span class="banner-item">🎟 Use Code: <strong>SNOW25</strong></span>
+        <span class="banner-item">⚡ Flash Sale Ending Soon</span>
+    </div>
+</div>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Winter Wonderland Sale</h1>
+        <p style="font-size: 1.5rem; color: #0277bd;">Cozy Deals • Electronics • Warm Fashion</p>
+    </div>
+</section>
+
+<div class="container">
+    <h1 class="section-title">Frozen Deals</h1>
+    
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterByCategory('all', this)">♾ All</button>
+        <button class="filter-btn" onclick="filterByCategory('Grocery', this)">🥦 Grocery</button>
+        <button class="filter-btn" onclick="filterByCategory('Electronics', this)">🎧 Electronics</button>
+        <button class="filter-btn" onclick="filterByCategory('Clothes', this)">👕 Fashion</button>
+    </div>
+    
+    <div class="product-grid" id="product-grid"></div>
+</div>
+
+<div class="newsletter">
+    <h2>Subscribe to our Newsletter</h2>
+    <p>Get the latest updates and coupons.</p>
+    <form onsubmit="event.preventDefault(); alert('Subscribed!');">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+    </form>
+</div>
+
+<footer>
+    <div style="margin-bottom: 20px;">
+        <a href="aboutus.html" class="footer-link">About Us</a>
+        <a href="contactus.html" class="footer-link">Contact Us</a>
+        <a href="portal.html" class="footer-link">Seller Portal</a>
+    </div>
+
+    <div class="social-links">
+        <a href="https://facebook.com" target="_blank" class="fab fa-facebook" title="Facebook"></a>
+        <a href="https://instagram.com" target="_blank" class="fab fa-instagram" title="Instagram"></a>
+    </div>
+
+    <div style="font-size: 1.5rem; margin-top: 15px;">
+        <span>💳</span> <span>🏦</span> <span>📱</span> <span>💵</span>
+    </div>
+    <p style="margin-top: 15px; color: #666;">© 2025 Your Shop India.</p>
+</footer>
+
+<button onclick="topFunction()" id="scrollTopBtn" title="Go to top">⬆</button>
+<a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">💬</a>
+<div id="toast">Item added to cart!</div>
+
+<script>
+    // ૧. પ્રોડક્ટ્સ લોડ કરવા માટેનું ફંક્શન
+    function getAllProducts() {
+        // LocalStorage માંથી ડેટા લાવો
+        let storedProducts = JSON.parse(localStorage.getItem('yourShopProducts'));
+
+        // જો LocalStorage માં ડેટા ન હોય, તો ડિફોલ્ટ પ્રોડક્ટ્સ લોડ કરો
+        if (!storedProducts || storedProducts.length === 0) {
+            const defaultProducts = [
+                { id: 101, name: "Winter Jacket", category: "Clothes", price: 2499, mrp: 4999, image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" },
+                { id: 102, name: "Headphones", category: "Electronics", price: 3999, mrp: 8000, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" },
+                { id: 103, name: "Smart Watch", category: "Electronics", price: 4500, mrp: 9000, image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" },
+                { id: 104, name: "Almonds (1kg)", category: "Grocery", price: 850, mrp: 1200, image: "https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=500" }
+            ];
+            localStorage.setItem('yourShopProducts', JSON.stringify(defaultProducts));
+            return defaultProducts;
+        }
+        return storedProducts;
+    }
+
+    function renderProducts(items) {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = '';
+        items.forEach(p => {
+            grid.innerHTML += `
+                <div class="card">
+                    <img src="${p.image}" style="width:100%; height:200px; object-fit:contain;">
+                    <h3>${p.name}</h3>
+                    <p class="price">₹${p.price} <span style="text-decoration:line-through; font-size:0.9rem; color:#999;">₹${p.mrp || p.price * 1.5}</span></p>
+                    <button class="buy-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+                </div>`;
+        });
+    }
+
+    function filterByCategory(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const allProds = getAllProducts();
+        const filtered = cat === 'all' ? allProds : allProds.filter(p => p.category === cat);
+        renderProducts(filtered);
+    }
+
+    function addToCart(id) {
+        let cart = JSON.parse(localStorage.getItem('yourShopCart')) || [];
+        cart.push(id);
+        localStorage.setItem('yourShopCart', JSON.stringify(cart));
+        updateCartCount();
+        showToast("Added to cart!");
+    }
+
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('yourShopCart')) || [];
+        document.getElementById('cart-link').innerText = `Cart (${cart.length})`;
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.className = "show";
+        setTimeout(() => t.className = "", 3000);
+    }
+
+    function createSnowflakes() {
+        for (let i = 0; i < 30; i++) {
+            const snow = document.createElement('div');
+            snow.className = 'snowflake'; snow.innerHTML = '❄';
+            snow.style.left = Math.random() * 100 + 'vw';
+            snow.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(snow);
+        }
+    }
+
+    function topFunction() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+    window.onscroll = function() {
+        document.getElementById("scrollTopBtn").style.display = (window.scrollY > 100) ? "block" : "none";
+    };
+
+    window.onload = () => { 
+        const allProds = getAllProducts();
+        renderProducts(allProds); 
+        updateCartCount(); 
+        createSnowflakes(); 
+    };
+</script>
+
+</body>
+</html>

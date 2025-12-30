@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | Your Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #00796b; }
+
+        /* --- SETTINGS CONTAINER --- */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            width: 90%;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            flex: 1;
+        }
+
+        h2 {
+            color: #004d40;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 2px solid #e0f2f1;
+            padding-bottom: 15px;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #00796b;
+            box-shadow: 0 0 5px rgba(0, 121, 107, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Buttons */
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .save-btn {
+            flex: 1;
+            padding: 12px;
+            background: #00796b;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .save-btn:hover { background: #004d40; }
+
+        .cancel-btn {
+            flex: 1;
+            padding: 12px;
+            background: white;
+            color: #555;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .cancel-btn:hover { background: #f5f5f5; }
+
+        /* Notification */
+        #msg {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .success { background: #e8f5e9; color: #2e7d32; }
+        .error { background: #ffebee; color: #c62828; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2f1;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="account.html">My Account</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Account Settings</h2>
+
+    <div id="msg"></div>
+
+    <form onsubmit="saveSettings(event)">
+        <div class="form-group">
+            <label>Display Name</label>
+            <input type="text" id="username" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="user@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX">
+        </div>
+
+        <div class="form-group">
+            <label>Shipping Address</label>
+            <textarea id="address" placeholder="Enter your default delivery address"></textarea>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="cancel-btn" onclick="window.location.href='account.html'">Cancel</button>
+            <button type="submit" class="save-btn">Save Changes</button>
+        </div>
+    </form>
+</div>
+
+<footer>
+    <p>© 2025 Your Shop India. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // --- 1. LOAD DATA ON STARTUP ---
+    window.onload = function() {
+        // Check if logged in
+        if (localStorage.getItem('yourShop_isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // Populate fields from Memory
+        document.getElementById('username').value = localStorage.getItem('yourShop_username') || '';
+        document.getElementById('email').value = localStorage.getItem('yourShop_email') || '';
+        document.getElementById('phone').value = localStorage.getItem('yourShop_phone') || '';
+        document.getElementById('address').value = localStorage.getItem('yourShop_address') || '';
+    };
+
+    // --- 2. SAVE DATA FUNCTION ---
+    function saveSettings(e) {
+        e.preventDefault(); // Stop page reload
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        // Save to LocalStorage
+        localStorage.setItem('yourShop_username', username);
+        localStorage.setItem('yourShop_email', email);
+        localStorage.setItem('yourShop_phone', phone);
+        localStorage.setItem('yourShop_address', address);
+
+        // Show Success Message
+        const msgDiv = document.getElementById('msg');
+        msgDiv.className = 'success';
+        msgDiv.innerText = '✅ Profile updated successfully!';
+        msgDiv.style.display = 'block';
+
+        // Redirect back to Account page after 1.5 seconds
+        setTimeout(() => {
+            window.location.href = 'account.html';
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

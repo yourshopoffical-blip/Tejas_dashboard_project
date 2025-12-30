@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Your Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #00796b; }
+
+        /* --- DASHBOARD CONTAINER --- */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            width: 90%;
+            flex: 1;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #00796b 0%, #004d40 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0, 121, 107, 0.2);
+        }
+
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            background: white;
+            color: #00796b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-right: 25px;
+        }
+
+        .welcome-text h1 { margin-bottom: 5px; font-size: 2rem; }
+        .welcome-text p { opacity: 0.9; }
+
+        /* --- ACTION GRID --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .action-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, border-color 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            border-color: #80deea;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .action-card h3 {
+            color: #00796b;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .logout-btn:hover {
+            background-color: #ffcdd2;
+            border-color: #ef9a9a;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2f1;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="catagory.html">Category</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<div class="container">
+    
+    <div class="welcome-banner">
+        <div class="avatar-circle" id="user-initial">U</div>
+        <div class="welcome-text">
+            <h1 id="user-name">Welcome, User</h1>
+            <p id="user-email">user@example.com</p>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <a href="orders.html" class="action-card">
+            <span class="icon">📦</span>
+            <h3>My Orders</h3>
+            <p>Track, return, or buy things again</p>
+        </a>
+
+        <a href="wishlist.html" class="action-card">
+            <span class="icon">❤️</span>
+            <h3>My Wishlist</h3>
+            <p>View your saved items</p>
+        </a>
+
+        <a href="edit login.html" class="action-card">
+            <span class="icon">✏️</span>
+            <h3>Edit Profile</h3>
+            <p>Change name, address & password</p>
+        </a>
+
+        <div class="action-card logout-btn" onclick="logout()">
+            <span class="icon">🚪</span>
+            <h3 style="color: #c62828;">Logout</h3>
+            <p>Sign out of your account</p>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 Your Shop India. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // --- 1. CHECK LOGIN & DISPLAY DATA ---
+    window.onload = function() {
+        // Use 'yourShop_' prefix to match new branding logic
+        const isLoggedIn = localStorage.getItem('yourShop_isLoggedIn');
+        const userName = localStorage.getItem('yourShop_username') || "Guest";
+        const userEmail = localStorage.getItem('yourShop_email') || "Please login to continue";
+
+        if (isLoggedIn !== 'true') {
+            // If not logged in, redirect to Login Page
+            window.location.href = "login.html";
+        } else {
+            // Update UI with user info
+            document.getElementById('user-name').innerText = "Welcome, " + userName;
+            document.getElementById('user-email').innerText = userEmail;
+            document.getElementById('user-initial').innerText = userName.charAt(0).toUpperCase();
+        }
+    }
+
+    // --- 2. LOGOUT FUNCTION ---
+    function logout() {
+        if(confirm("Are you sure you want to logout?")) {
+            // Clear specific keys
+            localStorage.removeItem('yourShop_isLoggedIn');
+            localStorage.removeItem('yourShop_username');
+            localStorage.removeItem('yourShop_email');
+            
+            // Redirect to home
+            window.location.href = "index.html";
+        }
+    }
+</script>
+
+</body>
+</html>
