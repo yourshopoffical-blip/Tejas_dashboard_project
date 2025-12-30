@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders | SwiftCart</title>
+
+<style>
+    /* ... keeping your existing styles ... */
+    *{ margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body{ background:#296C87; }
+    header{ background:linear-gradient(135deg,#e0f7fa,#ffffff); padding:15px 5%; display:flex; justify-content:space-between; align-items:center; }
+    .logo{ font-size:1.5rem; font-weight:bold; color:#00796b; text-decoration:none; }
+    nav a{ margin-left:20px; text-decoration:none; color:#555; font-weight:500; }
+    .orders-container{ max-width:900px; margin:40px auto; background:#fff; padding:30px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.15); min-height: 400px; }
+    .orders-container h2{ text-align:center; color:#00796b; margin-bottom:25px; }
+    
+    .order-card{ border:1px solid #ddd; border-radius:12px; padding:20px; margin-bottom:20px; display:flex; gap:20px; align-items:center; transition: 0.3s; }
+    .order-card:hover { border-color: #80deea; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .order-img{ width:100px; height:100px; background:#f0f0f0; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#999; font-size:2rem; }
+    .order-details{ flex:1; }
+    .order-details h3{ font-size:1.1rem; margin-bottom:5px; color: #333; }
+    .order-details p{ font-size:0.9rem; color:#555; margin:3px 0; }
+    .price{ font-weight:bold; color:#00796b; }
+    .status{ padding:6px 14px; border-radius:20px; font-size:0.85rem; font-weight:bold; }
+    
+    .delivered{ background:#c8e6c9; color:#256029; }
+    .shipped{ background:#fff9c4; color:#8a6d00; }
+    .empty-state { text-align: center; padding: 50px; color: #666; }
+    .shop-now-btn { display: inline-block; margin-top: 15px; background: #00796b; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none; }
+
+    footer{ text-align:center; padding:20px; color:#fff; opacity:0.9; }
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">SwiftCart</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="orders-container" id="orders-list">
+    <h2>My Orders</h2>
+    </div>
+
+<footer>
+    © 2025 SwiftCart India
+</footer>
+
+<script>
+    // 1. Mock Data (If no orders are saved yet)
+    const defaultOrders = [
+        { id: "SC10245", name: "Wireless Headphones", date: "12 Dec 2025", price: "₹2,499", status: "delivered", icon: "🎧" },
+        { id: "SC10278", name: "Smart Watch Series 7", date: "18 Dec 2025", price: "₹14,999", status: "shipped", icon: "⌚" }
+    ];
+
+    function loadOrders() {
+        const ordersList = document.getElementById('orders-list');
+        
+        // Try to get user-created orders from localStorage, otherwise use defaults
+        const storedOrders = JSON.parse(localStorage.getItem('swiftCart_orders')) || defaultOrders;
+
+        if (storedOrders.length === 0) {
+            ordersList.innerHTML += `
+                <div class="empty-state">
+                    <p>You haven't placed any orders yet.</p>
+                    <a href="index.html" class="shop-now-btn">Start Shopping</a>
+                </div>`;
+            return;
+        }
+
+        // 2. Generate Order Cards
+        storedOrders.forEach(order => {
+            const card = document.createElement('div');
+            card.className = 'order-card';
+            
+            card.innerHTML = `
+                <div class="order-img">${order.icon || '📦'}</div>
+                <div class="order-details">
+                    <h3>${order.name}</h3>
+                    <p>Order ID: ${order.id}</p>
+                    <p>Ordered on: ${order.date}</p>
+                    <p class="price">${order.price}</p>
+                </div>
+                <span class="status ${order.status}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span>
+            `;
+            ordersList.appendChild(card);
+        });
+    }
+
+    // 3. Logic to handle "Simulated Checkout"
+    // If a user comes from the cart page, you can push a new order to this list
+    function addNewOrder(name, price) {
+        let orders = JSON.parse(localStorage.getItem('swiftCart_orders')) || defaultOrders;
+        const newOrder = {
+            id: "SC" + Math.floor(Math.random() * 90000 + 10000),
+            name: name,
+            date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+            price: price,
+            status: "shipped",
+            icon: "🛍️"
+        };
+        orders.unshift(newOrder); // Add to the top of the list
+        localStorage.setItem('swiftCart_orders', JSON.stringify(orders));
+    }
+
+    window.onload = loadOrders;
+</script>
+
+</body>
+</html>
