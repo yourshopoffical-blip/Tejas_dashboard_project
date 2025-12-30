@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Your Shop</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #87CEEB, #E0F7FA);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 { color: #0277bd; margin-bottom: 30px; }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .btn-customer {
+            background: #0288d1; color: white;
+        }
+        .btn-customer:hover { background: #01579b; }
+        
+        .btn-seller {
+            background: white; color: #0277bd; border: 2px solid #0277bd;
+        }
+        .btn-seller:hover { background: #e1f5fe; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Welcome!</h1>
+        <p>Please select your role:</p>
+        
+        <a href="index.html" class="btn btn-customer">🛒 Go to Customer Shop</a>
+        <a href="seller-login.html" class="btn btn-seller">💼 Go to Seller Login</a>
+    </div>
+</body>
+</html>

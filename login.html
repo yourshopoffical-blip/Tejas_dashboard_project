@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Your shop admin  portal</title>
+    <style>
+        :root {
+            --bg-light: #f0f9ff;
+            --card-bg: #ffffff;
+            --sky-blue: #0ea5e9;
+            --sky-dark: #0369a1;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --error-red: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            border-top: 6px solid var(--sky-blue);
+        }
+
+        h2 { text-align: center; margin-bottom: 0.5rem; }
+        .subtitle { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+        .form-group { margin-bottom: 1.2rem; position: relative; }
+        label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 600; }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background-color: #fff;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
+        /* Password Toggle Styling */
+        .password-wrapper { position: relative; }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--sky-blue);
+            background: none;
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--sky-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-login:hover { background-color: var(--sky-dark); }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .btn-admin {
+            width: 100%;
+            padding: 0.7rem;
+            background: white;
+            color: var(--text-dark);
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-admin:hover { background: #f8fafc; border-color: var(--sky-blue); }
+
+        #error-message {
+            color: var(--error-red);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Welcome</h2>
+    <p class="subtitle"> welcome</p>
+    
+    <div id="error-message">Invalid email or password.</div>
+
+    <form id="loginForm">
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="email@gmail.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="••••••••" required>
+                <button type="button" class="toggle-password" id="togglePassword">SHOW</button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-login">Sign In</button>
+    </form>
+
+    <div class="divider">Staff Access</div>
+    <a href="file:///C:/Users/parek/Downloads/backend-20251230T065545Z-1-001/backend/public/seller-dashboard.html"><button type="button" class="btn-admin" id="adminBtn">Admin Dashboard</button></a>
+</div>
+
+<script>
+    // 1. Toggle Password Visibility
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.textContent = type === 'password' ? 'SHOW' : 'HIDE';
+    });
+
+    // 2. Handle Login Form Submission
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('error-message');
+
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Mock Logic: In a real app, you'd send this to your server via fetch()
+        console.log("Logging in with:", email);
+
+        if (email === "test@example.com" && password === "password123") {
+            alert("Login Successful! Redirecting...");
+            window.location.href = "/home"; 
+        } else {
+            errorMessage.style.display = "block";
+            // Shake effect logic could be added here
+        }
+    });
+
+    // 3. Admin Button Action
+    document.getElementById('adminBtn').addEventListener('click', () => {
+        alert("Redirecting to Secure Admin Portal...");
+        // window.location.href = "/admin";
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Profile | Your Shop</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background:#296C87;
+}
+
+/* Header */
+header{
+    background:linear-gradient(135deg,#e0f7fa,#ffffff);
+    padding:15px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:1.5rem;
+    font-weight:bold;
+    color:#00796b;
+    text-decoration:none;
+}
+
+nav a{
+    margin-left:20px;
+    text-decoration:none;
+    color:#555;
+    font-weight:500;
+}
+
+/* Container */
+.profile-container{
+    max-width:600px;
+    background:#fff;
+    margin:40px auto;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Profile Image */
+.profile-pic{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.profile-pic img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    border:4px solid #80deea;
+}
+
+.profile-pic input{
+    margin-top:10px;
+}
+
+/* Form */
+form label{
+    display:block;
+    margin:15px 0 5px;
+    font-weight:600;
+    color:#333;
+}
+
+form input, textarea{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
+}
+
+textarea{
+    resize:none;
+    height:80px;
+}
+
+/* Button */
+.save-btn{
+    margin-top:25px;
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#00796b;
+    color:#fff;
+    font-size:1rem;
+    font-weight:bold;
+    border-radius:25px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.save-btn:hover{
+    background:#004d40;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:20px;
+    color:#fff;
+    opacity:0.9;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="orders.html">Orders</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="profile-container">
+    <h2 style="text-align:center; color:#00796b;">Edit Profile</h2>
+
+    <div class="profile-pic">
+        <img src="https://via.placeholder.com/120" alt="Profile">
+        <br>
+        <input type="file">
+    </div>
+
+    <form>
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your name">
+
+        <label>Email</label>
+        <input type="email" placeholder="example@gmail.com">
+
+        <label>Mobile Number</label>
+        <input type="tel" placeholder="+91 XXXXX XXXXX">
+
+        <label>Address</label>
+        <textarea placeholder="Enter your full address"></textarea>
+
+        <button class="save-btn">Save Changes</button>
+    </form>
+</div>
+
+<footer>
+    © 2025 Your Shop India
+</footer>
+
+</body>
+</html> 

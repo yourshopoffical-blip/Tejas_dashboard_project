@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders | Your Shop</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background:#296C87;
+}
+
+/* Header */
+header{
+    background:linear-gradient(135deg,#e0f7fa,#ffffff);
+    padding:15px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:1.5rem;
+    font-weight:bold;
+    color:#00796b;
+    text-decoration:none;
+}
+
+nav a{
+    margin-left:20px;
+    text-decoration:none;
+    color:#555;
+    font-weight:500;
+}
+
+/* Orders Container */
+.orders-container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.orders-container h2{
+    text-align:center;
+    color:#00796b;
+    margin-bottom:25px;
+}
+
+/* Order Card */
+.order-card{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+}
+
+.order-img{
+    width:100px;
+    height:100px;
+    background:#f0f0f0;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#999;
+    font-size:14px;
+}
+
+.order-details{
+    flex:1;
+}
+
+.order-details h3{
+    font-size:1.1rem;
+    margin-bottom:5px;
+}
+
+.order-details p{
+    font-size:0.9rem;
+    color:#555;
+    margin:3px 0;
+}
+
+.price{
+    font-weight:bold;
+    color:#00796b;
+}
+
+.status{
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:0.85rem;
+    font-weight:bold;
+}
+
+/* Status Colors */
+.delivered{
+    background:#c8e6c9;
+    color:#256029;
+}
+
+.shipped{
+    background:#fff9c4;
+    color:#8a6d00;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:20px;
+    color:#fff;
+    opacity:0.9;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="orders-container">
+    <h2>My Orders</h2>
+
+    <div class="order-card">
+        <div class="order-img">Image</div>
+        <div class="order-details">
+            <h3>Wireless Headphones</h3>
+            <p>Order ID: SC10245</p>
+            <p>Ordered on: 12 Dec 2025</p>
+            <p class="price">₹2,499</p>
+        </div>
+        <span class="status delivered">Delivered</span>
+    </div>
+
+    <div class="order-card">
+        <div class="order-img">Image</div>
+        <div class="order-details">
+            <h3>Smart Watch Series 7</h3>
+            <p>Order ID: SC10278</p>
+            <p>Ordered on: 18 Dec 2025</p>
+            <p class="price">₹14,999</p>
+        </div>
+        <span class="status shipped">Shipped</span>
+    </div>
+
+    <div class="order-card">
+        <div class="order-img">Image</div>
+        <div class="order-details">
+            <h3>Minimalist Backpack</h3>
+            <p>Order ID: SC10312</p>
+            <p>Ordered on: 20 Dec 2025</p>
+            <p class="price">₹1,899</p>
+        </div>
+        <span class="status delivered">Delivered</span>
+    </div>
+
+</div>
+
+<footer>
+    © 2025 Your Shop India
+</footer>
+
+</body>
+</html>
