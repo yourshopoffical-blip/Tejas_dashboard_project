@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Your Shop</title>
+    <style>
+        :root {
+            --primary: #00796b;
+            --primary-dark: #004d40;
+            --accent: #4db6ac;
+            --bg-light: #e0f2f1;
+            --text-dark: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f9;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* --- HERO SECTION --- */
+        .about-hero {
+            background: linear-gradient(rgba(0, 121, 107, 0.8), rgba(0, 77, 64, 0.9)), 
+                        url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 50px;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .about-hero h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        .about-hero p { font-size: 1.2rem; max-width: 600px; opacity: 0.9; }
+
+        /* --- STORY SECTION --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .story-text h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-family: 'Rockwell', serif;
+        }
+
+        .story-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 15px 15px 0px var(--bg-light);
+            border: 2px solid var(--accent);
+        }
+
+        /* --- STATS COUNTER --- */
+        .stats-container {
+            background: var(--primary);
+            color: white;
+            padding: 60px 0;
+            border-radius: 20px;
+            margin-bottom: 80px;
+            box-shadow: 0 10px 30px rgba(0, 121, 107, 0.2);
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item h3 { font-size: 3rem; margin-bottom: 5px; }
+        .stat-item p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* --- VALUES SECTION --- */
+        .values-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .values-header h2 {
+            color: var(--primary-dark);
+            font-size: 2.5rem;
+            text-decoration: underline;
+            text-decoration-color: var(--accent);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-bottom: 4px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .value-card:hover { transform: translateY(-10px); }
+
+        .value-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--bg-light);
+            margin-top: 50px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .story-grid { grid-template-columns: 1fr; }
+            .about-hero h1 { font-size: 2.5rem; }
+            .stats-grid { flex-direction: column; gap: 30px; }
+            header { flex-direction: column; gap: 15px; }
+            .nav-links { width: 100%; display: flex; justify-content: space-around; }
+            .nav-links a { margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Your Shop</a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="catagory.html">Category</a>
+            <a href="orders.html">Orders</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+    </header>
+
+    <div class="about-hero">
+        <h1>Our Story</h1>
+        <p>Redefining your shopping experience with quality, speed, and trust since 2025.</p>
+    </div>
+
+    <div class="container">
+        <section class="story-grid">
+            <div class="story-image">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Our Team">
+            </div>
+            <div class="story-text">
+                <h2>Driven by Quality</h2>
+                <p><strong>Your Shop</strong> started with a simple idea: that high-quality products should be accessible, beautiful, and delivered with transparency. We believe shopping should be as refreshing as a new beginning.</p>
+                <br>
+                <p>Our team scours the globe to find sustainable materials, fresh groceries, and innovative electronics that fit your modern lifestyle. From our warehouse to your doorstep, we handle everything with care.</p>
+            </div>
+        </section>
+
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3 class="counter" data-target="50">0</h3>
+                    <p>Happy Clients (K)</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="12">0</h3>
+                    <p>Cities Covered</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="1000">0</h3>
+                    <p>Premium Products</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="values-section">
+            <div class="values-header">
+                <h2>What We Believe In</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <span class="icon">🚀</span>
+                    <h3>Fast Delivery</h3>
+                    <p>We prioritize speed so you can enjoy your purchases sooner.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">💎</span>
+                    <h3>Top Quality</h3>
+                    <p>Every item is hand-picked and tested for durability and freshness.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">🌍</span>
+                    <h3>Eco-Friendly</h3>
+                    <p>Our packaging is 100% recyclable and earth-conscious.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 Your Shop India. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- ANIMATED COUNTERS ---
+        const counters = document.querySelectorAll('.counter');
+        const speed = 100;
+
+        const startCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target + "+";
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Trigger animation when stats section is visible
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                startCounters();
+                observer.disconnect(); 
+            }
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('.stats-container'));
+    </script>
+
+</body>
+</html>

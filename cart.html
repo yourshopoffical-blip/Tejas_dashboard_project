@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart | Your Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00796b;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #00796b; }
+
+        /* --- CART CONTAINER --- */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            width: 90%;
+            flex: 1;
+        }
+
+        h1 {
+            color: #004d40;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0f2f1;
+            padding-bottom: 10px;
+        }
+
+        /* Cart Layout */
+        .cart-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Cart Items List */
+        .cart-items {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .cart-item:last-child { border-bottom: none; }
+
+        .item-img {
+            width: 80px;
+            height: 80px;
+            background: #e0f7fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .item-price {
+            color: #00796b;
+            font-weight: bold;
+        }
+
+        /* Quantity Controls */
+        .qty-control {
+            display: flex;
+            align-items: center;
+            background: #f4f9f9;
+            border-radius: 20px;
+            padding: 5px 10px;
+            margin-right: 15px;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0 8px;
+            color: #555;
+        }
+
+        .qty-btn:hover { color: #00796b; }
+
+        .qty-value {
+            font-weight: bold;
+            margin: 0 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            border: none;
+            background: none;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .total-row {
+            border-top: 2px solid #e0f2f1;
+            padding-top: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #004d40;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #4db6ac;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover { background: #00796b; }
+
+        /* Empty State */
+        .empty-cart {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .empty-cart a {
+            display: inline-block;
+            margin-top: 20px;
+            background: #00796b;
+            color: white;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2f1;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .cart-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">Your Shop</a>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="orders.html">Orders</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Shopping Cart</h1>
+
+    <div id="cart-content">
+        </div>
+</div>
+
+<footer>
+    <p>© 2025 Your Shop India. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // --- 1. LOAD CART FROM LOCALSTORAGE ---
+    // Using the new 'yourShopCart' key to match index.html
+    let cart = JSON.parse(localStorage.getItem('yourShopCart')) || [];
+    const contentDiv = document.getElementById('cart-content');
+
+    function renderCart() {
+        if (cart.length === 0) {
+            contentDiv.innerHTML = `
+                <div class="empty-cart">
+                    <h2 style="font-size: 4rem;">🛒</h2>
+                    <h2>Your cart is empty</h2>
+                    <p style="color:#666; margin: 10px 0;">Looks like you haven't added anything yet.</p>
+                    <a href="index.html">Start Shopping</a>
+                </div>
+            `;
+            return;
+        }
+
+        // Calculate Totals
+        let subtotal = 0;
+        let itemsHTML = '';
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.qty;
+            subtotal += itemTotal;
+
+            itemsHTML += `
+                <div class="cart-item">
+                    <div class="item-img">${item.image}</div>
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="item-price">₹${item.price.toLocaleString('en-IN')}</p>
+                    </div>
+                    
+                    <div class="qty-control">
+                        <button class="qty-btn" onclick="updateQty(${index}, -1)">−</button>
+                        <span class="qty-value">${item.qty}</span>
+                        <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                    </div>
+
+                    <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+                </div>
+            `;
+        });
+
+        // Render Grid
+        contentDiv.innerHTML = `
+            <div class="cart-grid">
+                <div class="cart-items">
+                    ${itemsHTML}
+                </div>
+
+                <div class="summary-box">
+                    <h3 style="margin-bottom: 20px;">Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹${subtotal.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span style="color: green;">FREE</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Total</span>
+                        <span>₹${subtotal.toLocaleString('en-IN')}</span>
+                    </div>
+                    
+                    <button class="checkout-btn" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+                </div>
+            </div>
+        `;
+    }
+
+    // --- 2. UPDATE QUANTITY ---
+    function updateQty(index, change) {
+        if (cart[index].qty + change > 0) {
+            cart[index].qty += change;
+        } else {
+            // If qty becomes 0, ask to remove
+            if(confirm("Remove this item from cart?")) {
+                cart.splice(index, 1);
+            }
+        }
+        saveAndRender();
+    }
+
+    // --- 3. REMOVE ITEM ---
+    function removeItem(index) {
+        cart.splice(index, 1);
+        saveAndRender();
+    }
+
+    // --- 4. SAVE TO STORAGE ---
+    function saveAndRender() {
+        localStorage.setItem('yourShopCart', JSON.stringify(cart));
+        renderCart();
+    }
+
+    // Initial Render
+    renderCart();
+
+</script>
+
+</body>
+</html>
