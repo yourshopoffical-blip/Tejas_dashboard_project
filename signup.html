@@ -1,0 +1,175 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Your Shop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;
+        }
+        .logo { font-size: 2rem; font-weight: bold; color: #00796b; margin-bottom: 10px; display: inline-block; text-decoration: none; }
+        h2 { margin-bottom: 20px; color: #333; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #666; font-weight: 600; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; transition: 0.3s; }
+        input:focus { border-color: #00796b; }
+
+        .login-btn { width: 100%; padding: 12px; background-color: #00796b; color: white; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 1rem; }
+        .login-btn:hover { background-color: #004d40; }
+
+        /* GOOGLE BTN */
+        .google-btn {
+            width: 100%; padding: 12px; background-color: white; color: #333; 
+            border: 1px solid #ddd; border-radius: 25px; font-weight: bold; cursor: pointer; 
+            margin-top: 15px; display: flex; align-items: center; justify-content: center;
+            gap: 10px; transition: 0.3s;
+        }
+        .google-btn:hover { background-color: #f1f1f1; border-color: #ccc; }
+
+        .divider { margin: 20px 0; color: #aaa; font-size: 0.9rem; position: relative; }
+        .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: #ddd; }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        .footer-text { margin-top: 20px; font-size: 0.9rem; color: #777; }
+        .footer-text a { color: #00796b; text-decoration: none; font-weight: bold; }
+
+        /* OTP SECTION STYLES */
+        #otp-section { display: none; } /* Hidden by default */
+        .otp-msg { color: #00796b; margin-bottom: 15px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <a href="index.html" class="logo">Your Shop</a>
+        
+        <div id="signup-section">
+            <h2>Create Account</h2>
+            <form id="signupForm">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="mobile" placeholder="+91 XXXXX XXXXX" required pattern="[0-9]{10}">
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="user@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Set Password</label>
+                    <input type="password" id="password" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="login-btn">Get OTP</button>
+            </form>
+
+            <div class="divider">OR</div>
+            <button type="button" class="google-btn" onclick="googleSignup()">
+                <span>G</span> Sign up with Google
+            </button>
+
+            <p class="footer-text">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+
+        <div id="otp-section">
+            <h2>Verify Mobile</h2>
+            <p class="otp-msg">OTP sent to: <b id="display-mobile"></b></p>
+            
+            <div class="input-group">
+                <label>Enter 4-Digit OTP</label>
+                <input type="number" id="otp-input" placeholder="XXXX" style="text-align: center; letter-spacing: 5px; font-size: 1.2rem;">
+            </div>
+
+            <button onclick="verifyOTP()" class="login-btn">Verify & Create Account</button>
+            
+            <p class="footer-text">
+                Didn't receive code? <a href="#" onclick="resendOTP()">Resend OTP</a>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Store temporary data
+        let tempUser = {};
+        let generatedOTP = 0;
+
+        // --- 1. HANDLE SIGN UP CLICK ---
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Check if email already exists
+            let users = JSON.parse(localStorage.getItem('yourShopUsers')) || [];
+            if(users.find(u => u.email === email)) {
+                alert("Email already registered! Please Login.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Save data temporarily
+            tempUser = { name, mobile, email, password };
+
+            // Generate OTP (Random 4 digits)
+            generatedOTP = Math.floor(1000 + Math.random() * 9000);
+
+            // SIMULATE SENDING SMS
+            alert("FAKE SMS: Your OTP for Your Shop is " + generatedOTP);
+
+            // Switch to OTP Screen
+            document.getElementById('signup-section').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block';
+            document.getElementById('display-mobile').innerText = "+91 " + mobile;
+        });
+
+        // --- 2. VERIFY OTP ---
+        function verifyOTP() {
+            const enteredOTP = document.getElementById('otp-input').value;
+
+            if (parseInt(enteredOTP) === generatedOTP) {
+                // SUCCESS: Create Account
+                let users = JSON.parse(localStorage.getItem('yourShopUsers')) || [];
+                users.push(tempUser);
+                localStorage.setItem('yourShopUsers', JSON.stringify(users));
+
+                alert("✅ Mobile Verified! Account Created Successfully.");
+                window.location.href = "login.html";
+            } else {
+                alert("❌ Wrong OTP! Please try again.");
+            }
+        }
+
+        // --- 3. RESEND OTP ---
+        function resendOTP() {
+            generatedOTP = Math.floor(1000 + Math.random() * 9000);
+            alert("FAKE SMS: Your NEW OTP is " + generatedOTP);
+        }
+
+        // --- 4. GOOGLE SIGNUP ---
+        function googleSignup() {
+            const fakeEmail = prompt("Simulating Google Login...\nEnter your Gmail:", "user@gmail.com");
+            if(fakeEmail && fakeEmail.includes("@")) {
+                const name = fakeEmail.split("@")[0];
+                localStorage.setItem('yourShop_username', name);
+                localStorage.setItem('yourShop_email', fakeEmail);
+                localStorage.setItem('yourShop_isLoggedIn', 'true');
+                alert("Signed in with Google!");
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+
+</body>
+</html>
