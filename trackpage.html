@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Order | YourShopE</title>
+
+<style>
+:root{
+    --sky:#e3f2fd;
+    --blue:#2196f3;
+    --darkblue:#0d47a1;
+    --light:#f9fcff;
+    --text:#1a1a1a;
+    --accent:#ff9800;
+    --success:#4caf50;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#e3f2fd,#ffffff,#f3e5f5);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+header{
+    background:linear-gradient(90deg,var(--darkblue),var(--blue));
+    padding:15px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#fff;
+    box-shadow:0 6px 16px rgba(0,0,0,0.25);
+    animation:slideIn 1s ease-out;
+}
+
+@keyframes slideIn{
+    from{transform:translateY(-40px);opacity:0;}
+    to{transform:translateY(0);opacity:1;}
+}
+
+.logo{
+    font-size:1.8rem;
+    font-weight:bold;
+    letter-spacing:1px;
+    color:#fff;
+}
+
+.secure-badge{
+    font-size:0.85rem;
+    display:flex;
+    align-items:center;
+    color:#fff;
+}
+
+.secure-badge::before{
+    content:"🔒";
+    margin-right:5px;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+}
+
+/* ================= MAIN ================= */
+.main-container{
+    max-width:820px;
+    margin:45px auto;
+    padding:0 12px;
+}
+
+.track-card{
+    background:var(--light);
+    padding:35px;
+    border-radius:14px;
+    box-shadow:0 20px 40px rgba(33,150,243,0.2);
+}
+
+/* TITLE */
+.track-header{
+    text-align:center;
+}
+
+.track-header h1{
+    font-size:1.9rem;
+    background:linear-gradient(45deg,var(--darkblue),var(--blue));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.track-header p{
+    font-size:0.95rem;
+    color:#555;
+    margin-top:6px;
+}
+
+/* SEARCH */
+.input-group{
+    display:flex;
+    margin-top:30px;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 8px 18px rgba(33,150,243,0.25);
+}
+
+input{
+    flex:1;
+    padding:14px 22px;
+    border:none;
+    outline:none;
+    font-size:1rem;
+}
+
+.track-btn{
+    background:linear-gradient(135deg,var(--blue),var(--darkblue));
+    color:#fff;
+    border:none;
+    padding:0 30px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.track-btn:hover{
+    opacity:0.9;
+}
+
+/* LOADER */
+.loader{
+    display:none;
+    margin:25px auto;
+    width:34px;
+    height:34px;
+    border:4px solid #bbdefb;
+    border-top:4px solid var(--blue);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{transform:rotate(360deg);}
+}
+
+/* STATUS */
+#statusDisplay{
+    display:none;
+    margin-top:35px;
+}
+
+/* STEPPER */
+.stepper{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:30px;
+}
+
+.step{
+    flex:1;
+    text-align:center;
+    font-size:0.8rem;
+    color:#777;
+}
+
+.step span{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:#bbdefb;
+    color:#0d47a1;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.step.active span{
+    background:var(--blue);
+    color:#fff;
+}
+
+/* DETAILS */
+.details-card{
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    border-left:6px solid var(--blue);
+    box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+.details-card h4{
+    font-size:1.2rem;
+    color:var(--darkblue);
+    margin-bottom:8px;
+}
+
+#eta{
+    margin-top:10px;
+    font-size:0.9rem;
+    font-weight:bold;
+    color:var(--success);
+}
+
+/* ROUTE */
+.route{
+    margin-top:18px;
+    font-size:0.85rem;
+    background:#e3f2fd;
+    padding:12px;
+    border-radius:8px;
+}
+
+/* SUPPORT */
+.support-strip{
+    margin-top:18px;
+    background:#e3f2fd;
+    padding:12px;
+    font-size:0.85rem;
+    display:flex;
+    justify-content:space-between;
+    border-radius:8px;
+}
+
+.support-strip a{
+    color:var(--darkblue);
+    font-weight:bold;
+    text-decoration:none;
+}
+
+/* TRUST */
+.trust-footer{
+    margin-top:25px;
+    display:flex;
+    justify-content:space-between;
+    font-size:0.8rem;
+    color:#444;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">YourShopE</div>
+    <div class="secure-badge">Trusted • Secure • Real-Time Tracking</div>
+</header>
+
+<div class="main-container">
+<div class="track-card">
+
+    <div class="track-header">
+        <h1>Track Your Order</h1>
+        <p>Your package journey, updated live with care 💙</p>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="orderInput" placeholder="Enter Order ID (SC-101)">
+        <button class="track-btn" onclick="liveTrack()">Track</button>
+    </div>
+
+    <div class="loader" id="loader"></div>
+
+    <div id="statusDisplay">
+
+        <div class="stepper">
+            <div class="step" id="s1"><span>1</span><br>Confirmed</div>
+            <div class="step" id="s2"><span>2</span><br>Packed</div>
+            <div class="step" id="s3"><span>3</span><br>On Route</div>
+            <div class="step" id="s4"><span>4</span><br>Delivered</div>
+        </div>
+
+        <div class="details-card">
+            <h4 id="statusTitle"></h4>
+            <p id="statusDesc"></p>
+            <div id="eta"></div>
+            <div class="route" id="route"></div>
+        </div>
+
+        <div class="support-strip">
+            <span>Need assistance?</span>
+            <a href="mailto:support@yourshope.com">Contact Support</a>
+        </div>
+    </div>
+
+    <div class="trust-footer">
+        <span>✔ Verified Sellers</span>
+        <span>✔ Live Tracking</span>
+        <span>✔ 24/7 Support</span>
+    </div>
+
+</div>
+</div>
+
+<script>
+function liveTrack(){
+    const id=document.getElementById("orderInput").value.toUpperCase().trim();
+    const loader=document.getElementById("loader");
+    const display=document.getElementById("statusDisplay");
+
+    if(!id){ alert("Please enter Order ID"); return; }
+
+    loader.style.display="block";
+    display.style.display="none";
+
+    setTimeout(()=>{
+        loader.style.display="none";
+        display.style.display="block";
+
+        const orders={
+            "SC-101":{step:2,title:"Order Packed",desc:"Packed safely.",eta:"Delivery in 3 days",route:"Ahmedabad → Mumbai → Pune"},
+            "SC-102":{step:3,title:"On the Way",desc:"Travelling to you.",eta:"Arriving tomorrow",route:"Delhi → Jaipur → Udaipur"},
+            "SC-103":{step:4,title:"Delivered",desc:"Delivered successfully.",eta:"Delivered today",route:"Bengaluru → Chennai"}
+        };
+
+        const data=orders[id]||{step:1,title:"Order Confirmed",desc:"Processing order.",eta:"4–6 days",route:"Warehouse → Hub"};
+
+        statusTitle.innerText=data.title;
+        statusDesc.innerText=data.desc;
+        eta.innerText=data.eta;
+        route.innerText="Tracking Path: "+data.route;
+
+        for(let i=1;i<=4;i++){
+            document.getElementById("s"+i).classList.toggle("active",i<=data.step);
+        }
+    },1200);
+}
+</script>
+
+</body>
+</html>

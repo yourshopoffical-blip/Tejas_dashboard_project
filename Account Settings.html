@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | SwiftCart</title>
+    <style>
+        /* Reusing your styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #296C87; }
+        header { background: linear-gradient(135deg, #e0f7fa, #ffffff); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #00796b; text-decoration: none; }
+        nav a { margin-left: 20px; text-decoration: none; color: #555; font-weight: 500; }
+        .settings-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .settings-container h2 { text-align: center; color: #00796b; margin-bottom: 30px; }
+        .setting-box { border: 1px solid #ddd; border-radius: 12px; padding: 20px; margin-bottom: 20px; transition: transform 0.2s; }
+        .setting-box:hover { transform: translateY(-2px); border-color: #80deea; }
+        .setting-box h3 { margin-bottom: 10px; color: #004d40; }
+        .setting-box p { color: #666; font-size: 0.9rem; margin-bottom: 15px; }
+        .btn { display: inline-block; padding: 8px 20px; border-radius: 20px; background: #80deea; color: #004d40; text-decoration: none; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; }
+        .btn:hover { background: #00796b; color: #fff; }
+        .toggle { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 5px 0; }
+        .toggle input { width: 20px; height: 20px; cursor: pointer; }
+        footer { text-align: center; padding: 20px; color: #fff; opacity: 0.9; }
+        
+        /* Toast Notification Style */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 30px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="logo">SwiftCart</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="orders.html">Orders</a>
+        <a href="account.html">Account</a>
+    </nav>
+</header>
+
+<div class="settings-container">
+    <h2>Account Settings</h2>
+
+    <div class="setting-box">
+        <h3>Profile Information</h3>
+        <p>Update your personal details</p>
+        <a href="account.html" class="btn">View Profile</a>
+    </div>
+
+    <div class="setting-box">
+        <h3>Security</h3>
+        <p>Change your password and secure your account</p>
+        <button class="btn" onclick="changePassword()">Change Password</button>
+    </div>
+
+    <div class="setting-box">
+        <h3>Notifications</h3>
+        <p>Manage SMS and email notifications</p>
+
+        <div class="toggle">
+            <span>Email Notifications</span>
+            <input type="checkbox" id="email-notif" onchange="savePreferences()">
+        </div>
+
+        <div class="toggle">
+            <span>SMS Notifications</span>
+            <input type="checkbox" id="sms-notif" onchange="savePreferences()">
+        </div>
+    </div>
+
+    <div class="setting-box">
+        <h3>Payment Methods</h3>
+        <p>Manage UPI, Cards & Cash on Delivery</p>
+        <button class="btn" onclick="showToast('Payment management coming soon!')">Manage Payments</button>
+    </div>
+</div>
+
+<div id="toast">Settings Saved!</div>
+
+<footer>
+    © 2025 SwiftCart India
+</footer>
+
+<script>
+    // 1. Load Saved Preferences from LocalStorage
+    function loadPreferences() {
+        const prefs = JSON.parse(localStorage.getItem('swiftCart_settings')) || {
+            email: true,
+            sms: false
+        };
+
+        document.getElementById('email-notif').checked = prefs.email;
+        document.getElementById('sms-notif').checked = prefs.sms;
+    }
+
+    // 2. Save Preferences to LocalStorage
+    function savePreferences() {
+        const prefs = {
+            email: document.getElementById('email-notif').checked,
+            sms: document.getElementById('sms-notif').checked
+        };
+
+        localStorage.setItem('swiftCart_settings', JSON.stringify(prefs));
+        showToast("Preferences Updated");
+    }
+
+    // 3. Simple Password Change Simulation
+    function changePassword() {
+        const newPass = prompt("Enter your new password:");
+        if (newPass && newPass.length >= 6) {
+            showToast("Password changed successfully!");
+        } else if (newPass) {
+            alert("Password must be at least 6 characters.");
+        }
+    }
+
+    // 4. Custom Toast Notification Logic
+    function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.className = "show";
+        setTimeout(() => { 
+            toast.className = toast.className.replace("show", ""); 
+        }, 3000);
+    }
+
+    // Initialize page
+    window.onload = loadPreferences;
+</script>
+
+</body>
+</html>
